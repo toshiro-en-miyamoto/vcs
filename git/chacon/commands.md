@@ -332,6 +332,23 @@ vcs $ git remote show origin
 
 ```
 git push [<repository> [<refspec>...]]
+
+vcs $ git add .
+
+vcs $ git commit -m "git commands up to push"
+[main b425d74] git commands up to push
+ 2 files changed, 200 insertions(+)
+
+vcs $ git push
+Enumerating objects: 17, done.
+Counting objects: 100% (17/17), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (14/14), 4.09 KiB | 838.00 KiB/s, done.
+Total 14 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), done.
+To git@192.168.0.42:the-repo/vcs.git
+   860d484..b425d74  main -> main
 ```
 
 When the command line does not specify where to push with the `repository` argument, `branch.*.remote` configuration for the current branch is consulted to determine where to push. If the configuration is missing, it defaults to `origin`.

@@ -332,7 +332,11 @@ vcs $ git remote show origin
 
 ```
 git push [<repository> [<refspec>...]]
+```
 
+Don't forget to stage the changes made and commit it.
+
+```bash
 vcs $ git add .
 
 vcs $ git commit -m "git commands up to push"

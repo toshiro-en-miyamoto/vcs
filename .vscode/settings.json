@@ -4,6 +4,7 @@
     "filemode",
     "forwardable",
     "logallrefupdates",
+    "maint",
     "oneline",
     "refspec",
     "repositoryformatversion",

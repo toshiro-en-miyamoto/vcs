@@ -26,7 +26,7 @@ There is a tradeoff of course: merges require a more careful branch management. 
 
 ### Graduation
 
-As a given feature goes from experimental to stable, it also *graduates* between the corresponding branches of the software. Git uses the following integration branches:
+As a given feature goes from experimental to stable, it also *graduates* between the corresponding branches of the software. Git uses the following *integration branches*:
 
 - `maint` tracks the commits that should go into the next *maintenance release*, i.e., update of the last released stable version;
 
@@ -40,7 +40,7 @@ There is a fourth official branch that is used slightly differently:
 
 Each of the four branches is usually a direct descendant of the one above it.
 
-Conceptually, the feature enters at an unstable branch (usually `next` or `seen`), and graduates to master for the next release once it is considered stable enough.
+Conceptually, the feature enters at an unstable branch (usually `next` or `seen`), and graduates to `master` for the next release once it is considered stable enough.
 
 ### Merging upwards
 

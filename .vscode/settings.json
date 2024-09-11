@@ -8,6 +8,7 @@
     "oneline",
     "refspec",
     "repositoryformatversion",
-    "unstage"
+    "unstage",
+    "unstaged"
   ]
 }

@@ -1,13 +1,18 @@
 {
   "cSpell.words": [
     "chacon",
+    "drwxr",
     "filemode",
     "forwardable",
+    "hexdump",
+    "ignorecase",
     "logallrefupdates",
     "maint",
     "oneline",
+    "precomposeunicode",
     "refspec",
     "repositoryformatversion",
+    "rwxr",
     "unstage",
     "unstaged"
   ]

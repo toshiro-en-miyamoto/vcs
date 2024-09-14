@@ -1,19 +1,28 @@
 {
   "cSpell.words": [
+    "applypatch",
     "chacon",
+    "DIRC",
     "drwxr",
+    "drwxrwxr",
     "filemode",
     "forwardable",
+    "fsmonitor",
     "hexdump",
     "ignorecase",
+    "LICENS",
     "logallrefupdates",
     "maint",
     "oneline",
+    "pbcopy",
     "precomposeunicode",
     "refspec",
     "repositoryformatversion",
     "rwxr",
+    "rwxrwxr",
+    "sendemail",
     "unstage",
-    "unstaged"
+    "unstaged",
+    "xsel"
   ]
 }

@@ -21,6 +21,8 @@
     "rwxr",
     "rwxrwxr",
     "sendemail",
+    "Snapshotting",
+    "symref",
     "unstage",
     "unstaged",
     "xsel"

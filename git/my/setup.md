@@ -18,7 +18,7 @@ $ eval "$(ssh-agent -s)"
 $ ssh-add ~/.ssh/id_ed25519
 ```
 
-Then add the public key in your git accout.
+Then add the public key in your git account.
 
 ```bash
 $ xsel --clipboard < ~/.ssh/id_ed25519.pub
@@ -47,7 +47,7 @@ on Linux
 $ xsel --clipboard < ~/.ssh/example1_ed25519.pub
 $ xsel --clipboard < ~/.ssh/example2_ed25519.pub
 
-on Moac
+on Mac
 $ pbcopy < ~/.ssh/example1_ed25519.pub
 $ pbcopy < ~/.ssh/example2_ed25519.pub
 ```
@@ -97,7 +97,7 @@ Verify that the fingerprint in the message you see matches GitHub's public key f
 Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
 ```
 
-Now the `~/.ssh/knwon_hosts` file contains `github.com`, and
+Now the `~/.ssh/known_hosts` file contains `github.com`, and
 
 
 ```
@@ -113,5 +113,5 @@ $ ssh -T git@github-example2
 If the authentication failed, you would see an error message like this:
 
 ```
-git@github.com: Permission denied (publickey).
+git@github.com: Permission denied (public key).
 ```

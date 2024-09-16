@@ -136,7 +136,7 @@ class Test::Unit::TestCase
 
 abc $ git add .
 
-bc $ git status
+abc $ git status
 On branch main
 
 No commits yet
@@ -293,6 +293,18 @@ blob
 
 abc $ git cat-file -t 10b2e
 blob
+```
+
+### `commit` objects
+
+```bash
+abc $ cat .git/HEAD
+
+abc $ cat .git/refs/heads/main
+
+abc $ git cat-file -t xyz
+
+abc $ git cat-file -p xyz
 ```
 
 

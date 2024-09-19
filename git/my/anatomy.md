@@ -22,7 +22,7 @@ Let's look what the `git init` command for a plain directory does:
 repo $ mkdir abc
 repo $ cd abc
 
-abc $ git init -b main
+abc $ git init
 Initialized empty Git repository in ~/repo/abc/.git/
 ```
 
@@ -30,7 +30,7 @@ With that,
 
 - `~/repo/abc/` has become a new working directory
 - `~/repo/abc/.git/` is a Git repository associated with the working directory
-- the initial branch in the repository is `main`
+- the initial branch in the repository is `master`
 
 In the repository, nine directories and four files have been created:
 
@@ -67,7 +67,7 @@ The `HEAD` is a *symref* (see below) to the `refs/heads/` namespace describing t
 
 ```bash
 abc $ cat .git/HEAD
-ref: refs/heads/main
+ref: refs/heads/master
 ```
 
 The symref stands for *symbolic reference*: instead of containing the SHA-1 id itself, it is of the format `ref: refs/some/thing` and when referenced, it recursively dereferences to this reference. `HEAD` is a prime example of a `symref`. [Glossary]
@@ -128,7 +128,7 @@ abc $ cat LICENSE
 The MIT License
 Copyright (c) 2000 Scott Chacon
 
-abc $ cat test.rb
+abc $ cat ut/test.rb
 require 'logger'
 require 'test/unit'
 
@@ -137,7 +137,7 @@ class Test::Unit::TestCase
 abc $ git add .
 
 abc $ git status
-On branch main
+On branch master
 
 No commits yet
 
@@ -145,7 +145,7 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 	new file:   LICENSE
 	new file:   README
-	new file:   test.rb
+	new file:   ut/test.rb
 ```
 
 The `git add .` has created four files:
@@ -161,23 +161,23 @@ The `git add .` has created `.git/index` file:
 
 ```bash
 abc $ hexdump -C .git/index
-00000000  44 49 52 43 00 00 00 02  00 00 00 03 66 e6 8a 63  |DIRC........f..c|
-00000010  2c 55 a9 44 66 e6 8a 4d  15 cd 9a ec 00 00 b3 02  |,U.Df..M........|
-00000020  00 0a 20 1a 00 00 81 a4  00 00 03 ea 00 00 03 ea  |.. .............|
+00000000  44 49 52 43 00 00 00 02  00 00 00 03 66 ec 08 e0  |DIRC........f...|
+00000010  16 29 de 37 66 ec 08 e0  15 fc 17 7d 00 00 b3 02  |.).7f......}....|
+00000020  00 08 1f d8 00 00 81 a4  00 00 03 ea 00 00 03 ea  |................|
 00000030  00 00 00 30 70 45 d3 35  f6 81 33 33 40 d0 c0 89  |...0pE.5..33@...|
 00000040  94 2a a3 8d d2 96 dd f6  00 07 4c 49 43 45 4e 53  |.*........LICENS|
-00000050  45 00 00 00 66 e6 87 ba  1a 33 d3 83 66 e6 87 ba  |E...f....3..f...|
-00000060  19 d8 46 04 00 00 b3 02  00 0a 18 e2 00 00 81 a4  |..F.............|
+00000050  45 00 00 00 66 ec 08 b0  24 4b 9f 1f 66 ec 08 b0  |E...f...$K..f...|
+00000060  24 1d d8 64 00 00 b3 02  00 08 1c 60 00 00 81 a4  |$..d.......`....|
 00000070  00 00 03 ea 00 00 03 ea  00 00 00 3f 3c ea 8d cb  |...........?<...|
 00000080  6e 1e 95 6f 82 ea 54 f6  b5 b5 a3 87 26 9b d0 92  |n..o..T.....&...|
-00000090  00 06 52 45 41 44 4d 45  00 00 00 00 66 e6 8b 5c  |..README....f..\|
-000000a0  09 eb d4 e1 66 e6 8b 5c  09 9f 89 e5 00 00 b3 02  |....f..\........|
-000000b0  00 0a 1c 4a 00 00 81 a4  00 00 03 ea 00 00 03 ea  |...J............|
+00000090  00 06 52 45 41 44 4d 45  00 00 00 00 66 ec 09 14  |..README....f...|
+000000a0  32 b2 f3 b0 66 ec 09 14  2f 7a fc 6d 00 00 b3 02  |2...f.../z.m....|
+000000b0  00 08 21 7f 00 00 81 a4  00 00 03 ea 00 00 03 ea  |..!.............|
 000000c0  00 00 00 41 10 b2 ec 8f  74 f8 b3 ba 7d d3 99 7f  |...A....t...}...|
-000000d0  88 fb 50 83 b3 5c 7e 6d  00 07 74 65 73 74 2e 72  |..P..\~m..test.r|
-000000e0  62 00 00 00 f3 26 a2 45  3e a0 4c 9c 2d 99 a6 5e  |b....&.E>.L.-..^|
-000000f0  d2 68 a6 f2 cc 33 29 7b                           |.h...3){|
-000000f8
+000000d0  88 fb 50 83 b3 5c 7e 6d  00 0a 75 74 2f 74 65 73  |..P..\~m..ut/tes|
+000000e0  74 2e 72 62 00 00 00 00  00 00 00 00 84 5b 69 55  |t.rb.........[iU|
+000000f0  79 2c 43 e4 f9 fc 40 0e  a4 04 7f e3 14 04 95 70  |y,C...@........p|
+00000100
 ```
 
 The `git add` command adds files contents to the *index*. [`git-add`]
@@ -197,21 +197,21 @@ The index is the current index file for the repository. It is usually not found 
 | signature			| 4 bytes 	| "DIRC" |
 | version				| 32 bits 	| `00 00 00 02` |
 | # of entries	| 32 bits		| `00 00 00 03` |
-| ctime sec			| 32 bits		| `66 e6 8a 63` | `66 e6 87 ba` | `66 e6 8b 5c` |
-| ctime nano		| 32 bits 	| `2c 55 a9 44` | `1a 33 d3 83` | `09 eb d4 e1` |
-| mtime sec			| 32 bits		| `66 e6 8a 4d` | `66 e6 87 ba` | `66 e6 8b 5c` |
-| mtime nano		| 32 bits		| `15 cd 9a ec` | `19 d8 46 04` | `09 9f 89 e5` |
+| ctime sec			| 32 bits		| `66 ec 08 e0` | `66 ec 08 b0` | `66 ec 09 14` |
+| ctime nano		| 32 bits 	| `16 29 de 37` | `24 4b 9f 1f` | `32 b2 f3 b0` |
+| mtime sec			| 32 bits		| `66 ec 08 e0` | `66 ec 08 b0` | `66 ec 09 14` |
+| mtime nano		| 32 bits		| `15 fc 17 7d` | `24 1d d8 64` | `2f 7a fc 6d` |
 | dev						| 32 bits		| `00 00 b3 02` | `00 00 b3 02` | `00 00 b3 02` |
-| ino						| 32 bits		| `00 0a 20 1a` | `00 0a 18 e2` | `00 0a 1c 4a` |
+| ino						| 32 bits		| `00 08 1f d8` | `00 08 1c 60` | `00 08 21 7f` |
 | mode					| 32 bits 	| `00 00 81 a4` | `00 00 81 a4` | `00 00 81 a4` |
 | uid						| 32 bits		| `00 00 03 ea` | `00 00 03 ea` | `00 00 03 ea` |
 | gid						| 32 bits		| `00 00 03 ea` | `00 00 03 ea` | `00 00 03 ea` |
 | file size			| 32 bits		| `00 00 00 30` | `00 00 00 3f` | `00 00 00 41` |
 | object name		| 160 bits	| `70 45 d3 ..`	| `3c ea 8d ..` | `10 b2 ec ..` |
-| flag					| 16 bits		| `00 07`				| `00 06` 			| `00 07` 			|
-| path name			| variable	| "LICENSE" 		| "README" 			| "test.rb" 		|
-| filler				| variable	| `00 00 00`		| `00 00 00 00` | `00 00 00` 		|
-| index checksum	| 160 bits	| `f3 26 a2 ..` |
+| flag					| 16 bits		| `00 07`				| `00 06` 			| `00 0a` 			|
+| path name			| variable	| LICENSE 			| README 				| ut/test.rb 		|
+| filler				| variable	| 3 * `00`			| 4 * `00` 			| 8 * `00` 			|
+| index checksum	| 160 bits	| `84 5b 69 ..` |
 
 ### `blob` objects
 
@@ -233,7 +233,7 @@ abc $ cat README | git hash-object --stdin
 abc $ cat LICENSE | git hash-object --stdin
 7045d335f681333340d0c089942aa38dd296ddf6
 
-abc $ cat test.rb | git hash-object --stdin
+abc $ cat ut/test.rb | git hash-object --stdin
 10b2ec8f74f8b3ba7dd3997f88fb5083b35c7e6d
 ```
 
@@ -267,15 +267,15 @@ abc $ hexdump -C .git/objects/10/b2ec8f74f8b3ba7dd3997f88fb5083b35c7e6d
 Once you have content in your object database, you can examine that content with the `git cat-file` command. Passing `-p` to `cat-file` instructs the command to first figure out the type of content, then display it appropriately: [§10.2, Pro Git 2e]
 
 ```bash
-abc $ git cat-file -p 3cea8
+abc $ git cat-file -p 3cea8d
 == Testing library
 This library is used to test Ruby projects.
 
-abc $ git cat-file -p 7045d
+abc $ git cat-file -p 7045d3
 The MIT License
 Copyright (c) 2000 Scott Chacon
 
-abc $ git cat-file -p 10b2e
+abc $ git cat-file -p 10b2ec
 require 'logger'
 require 'test/unit'
 
@@ -285,13 +285,13 @@ class Test::Unit::TestCase
 You can have Git tell you the object type of any object in Git, given its SHA-1 key, with `git cat-file -t`: [§10.2, Pro Git 2e]
 
 ```bash
-abc $ git cat-file -t 3cea8
+abc $ git cat-file -t 3cea8d
 blob
 
-abc $ git cat-file -t 7045d
+abc $ git cat-file -t 7045d3
 blob
 
-abc $ git cat-file -t 10b2e
+abc $ git cat-file -t 10b2ec
 blob
 ```
 

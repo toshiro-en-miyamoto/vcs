@@ -267,15 +267,15 @@ abc $ hexdump -C .git/objects/10/b2ec8f74f8b3ba7dd3997f88fb5083b35c7e6d
 Once you have content in your object database, you can examine that content with the `git cat-file` command. Passing `-p` to `cat-file` instructs the command to first figure out the type of content, then display it appropriately: [§10.2, Pro Git 2e]
 
 ```bash
-abc $ git cat-file -p 3cea8d
+abc $ git cat-file -p 3cea8dc
 == Testing library
 This library is used to test Ruby projects.
 
-abc $ git cat-file -p 7045d3
+abc $ git cat-file -p 7045d33
 The MIT License
 Copyright (c) 2000 Scott Chacon
 
-abc $ git cat-file -p 10b2ec
+abc $ git cat-file -p 10b2ec8
 require 'logger'
 require 'test/unit'
 
@@ -285,26 +285,99 @@ class Test::Unit::TestCase
 You can have Git tell you the object type of any object in Git, given its SHA-1 key, with `git cat-file -t`: [§10.2, Pro Git 2e]
 
 ```bash
-abc $ git cat-file -t 3cea8d
+abc $ git cat-file -t 3cea8dc
 blob
 
-abc $ git cat-file -t 7045d3
+abc $ git cat-file -t 7045d33
 blob
 
-abc $ git cat-file -t 10b2ec
+abc $ git cat-file -t 10b2ec8
 blob
 ```
 
 ### `commit` objects
 
 ```bash
+abc $ git commit -m "Initial commit"
+[master (root-commit) 9c90e84] Initial commit
+ 3 files changed, 8 insertions(+)
+ create mode 100644 LICENSE
+ create mode 100644 README
+ create mode 100644 ut/test.rb
+```
+
+One file has been changed:
+
+- `.git/index`
+
+and four files have been created:
+
+- `.git/refs/heads/master`
+- `.git/objects/7d/f8a0ebddd38813dd05b413b518f50513d06f46`
+- `.git/objects/9c/90e84da6c99a7bec6106f498abb370f42d4567`
+- `.git/objects/32/bde47ab6be82df0ff7f332dca5407ca82f8a88`
+
+and three log-ish files have been created:
+
+- `.git/COMMIT_EDITMSG`
+- `.git/logs/HEAD`
+- `.git/logs/refs/heads/master`
+
+Recall that [Glossary]:
+
+- A *head* is a named reference to the commit at the tip of a branch. Heads are stored in a file in `$GIT_DIR/refs/heads/` directory.
+- `.git/HEAD` references to the current branch. In more detail: Your working tree is normally derived from the state of the tree referred to by `HEAD`. `HEAD` is a reference to one of the heads in your repository.
+
+```bash
 abc $ cat .git/HEAD
+ref: refs/heads/master
+```
 
-abc $ cat .git/refs/heads/main
+The `.git/HEAD` references to the `.git/refs/heads/master` file, meaning that the current branch is `master`.
 
-abc $ git cat-file -t xyz
+```bash
+abc $ cat .git/refs/heads/master
+9c90e84da6c99a7bec6106f498abb370f42d4567
 
-abc $ git cat-file -p xyz
+abc $ git cat-file -t 9c90e84
+commit
+```
+
+The commit object is an object which contains the information about a particular revision, such as parents, committer, author, date and the tree object which corresponds to the top directory of the stored revision. [Glossary]
+
+When you make a commit, Git stores a commit object that contains a pointer to the snapshot of the content you staged. This object also contains the author’s name and email address, the message that you typed, and pointers to the commit or commits that directly came before this commit (its parent or parents): zero parents for the initial commit, one parent for a normal commit, and multiple parents for a commit that results from a merge of two or more branches. [Chapter 3. Git Branching, Pro Git]
+
+- The `.git/refs/heads/master` file references to a commit object `9c90e84`, which is the root-commit of the `master` branch at the moment.
+- The root directory of the snapshot is represented by the *tree object* `32bde47`.
+- As it is a first commit, the commit object `9c90e84` does not have parents.
+
+```bash
+abc $ git cat-file -p 9c90e84
+tree 32bde47ab6be82df0ff7f332dca5407ca82f8a88
+author your name <your.email@sample.com> 1726747237 +0800
+committer your name <your.email@sample.com> 1726747237 +0800
+
+Initial commit
+```
+
+### `tree` objects
+
+A tree object is an object containing a list of file names and modes along with refs to the associated blob and/or tree objects. A tree is equivalent to a directory. [Glossary]
+
+```bash
+abc $ git cat-file -t 32bde47
+tree
+
+abc $ git cat-file -p 32bde47
+100644 blob 7045d335f681333340d0c089942aa38dd296ddf6	LICENSE
+100644 blob 3cea8dcb6e1e956f82ea54f6b5b5a387269bd092	README
+040000 tree 7df8a0ebddd38813dd05b413b518f50513d06f46	ut
+
+abc $ git cat-file -t 7df8a0e
+tree
+
+abc $ git cat-file -p 7df8a0e
+100644 blob 10b2ec8f74f8b3ba7dd3997f88fb5083b35c7e6d	test.rb
 ```
 
 
